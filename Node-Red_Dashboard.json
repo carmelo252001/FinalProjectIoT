@@ -20,12 +20,12 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 1070,
-        "y": 160,
+        "x": 490,
+        "y": 180,
         "wires": [
             [
                 "d71ce58b2407ea98",
-                "617a3ce6fdb9de37"
+                "5c29b504143a1dbd"
             ]
         ]
     },
@@ -42,8 +42,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1350,
-        "y": 160,
+        "x": 710,
+        "y": 140,
         "wires": []
     },
     {
@@ -55,11 +55,12 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
-        "y": 160,
+        "x": 710,
+        "y": 60,
         "wires": []
     },
     {
@@ -76,86 +77,16 @@
         "rh": 0,
         "inputs": 0,
         "x": 480,
-        "y": 160,
+        "y": 100,
         "wires": [
             [
                 "ec41b484e095ce8c",
-                "692a584406fbcfa0"
+                "53523552e070cb95"
             ]
         ]
     },
     {
-        "id": "617a3ce6fdb9de37",
-        "type": "ui_gauge",
-        "z": "9da94ae86f1c6ba4",
-        "name": "Temperature Gauge",
-        "group": "5d79457539c51f7d",
-        "order": 0,
-        "width": "10",
-        "height": "10",
-        "gtype": "gage",
-        "title": "Temperature",
-        "label": "C",
-        "format": "{{value}}",
-        "min": "-20",
-        "max": "35",
-        "colors": [
-            "#0037ff",
-            "#ffffff",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 1380,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "692a584406fbcfa0",
-        "type": "ui_gauge",
-        "z": "9da94ae86f1c6ba4",
-        "name": "Humidity Gauge",
-        "group": "5d79457539c51f7d",
-        "order": 1,
-        "width": "10",
-        "height": "10",
-        "gtype": "wave",
-        "title": "Humidity",
-        "label": "%",
-        "format": "{{value}}",
-        "min": 0,
-        "max": "100",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 780,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "0cbac9df34706421",
-        "type": "mqtt out",
-        "z": "9da94ae86f1c6ba4",
-        "name": "",
-        "topic": "IoTlab/light",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "3c33d56931cbc3e0",
-        "x": 1010,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "ce67149792ae1827",
+        "id": "ed944a84e235ab40",
         "type": "ui_button",
         "z": "9da94ae86f1c6ba4",
         "name": "",
@@ -173,8 +104,8 @@
         "payloadType": "str",
         "topic": "IoTlab/light",
         "topicType": "msg",
-        "x": 850,
-        "y": 320,
+        "x": 470,
+        "y": 700,
         "wires": [
             [
                 "0cbac9df34706421"
@@ -182,7 +113,7 @@
         ]
     },
     {
-        "id": "354e2d1daab4b981",
+        "id": "00813127bdaacd5b",
         "type": "ui_button",
         "z": "9da94ae86f1c6ba4",
         "name": "",
@@ -200,13 +131,268 @@
         "payloadType": "str",
         "topic": "IoTlab/light",
         "topicType": "msg",
-        "x": 850,
-        "y": 400,
+        "x": 470,
+        "y": 740,
         "wires": [
             [
                 "0cbac9df34706421"
             ]
         ]
+    },
+    {
+        "id": "5c29b504143a1dbd",
+        "type": "ui_gauge",
+        "z": "9da94ae86f1c6ba4",
+        "name": "Temperature Gauge",
+        "group": "5d79457539c51f7d",
+        "order": 0,
+        "width": "6",
+        "height": "10",
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "C",
+        "format": "{{value}}",
+        "min": "-20",
+        "max": "35",
+        "colors": [
+            "#0037ff",
+            "#ffffff",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 940,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "53523552e070cb95",
+        "type": "ui_gauge",
+        "z": "9da94ae86f1c6ba4",
+        "name": "Humidity Gauge",
+        "group": "5d79457539c51f7d",
+        "order": 1,
+        "width": "7",
+        "height": "10",
+        "gtype": "wave",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 920,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "0cbac9df34706421",
+        "type": "mqtt out",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "topic": "IoTlab/light",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 910,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "596ea18f4d9ff166",
+        "type": "mqtt out",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "topic": "IoTlab/temperature_desired",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 960,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "0b24bd68bc99d89d",
+        "type": "debug",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "14e55efdee72a025",
+        "type": "ui_text_input",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "label": "Temperature threshold",
+        "tooltip": "Changes the threshold",
+        "group": "5d79457539c51f7d",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "number",
+        "delay": "1000",
+        "topic": "IoTlab/temperature_desired",
+        "topicType": "msg",
+        "x": 500,
+        "y": 460,
+        "wires": [
+            [
+                "0b24bd68bc99d89d",
+                "596ea18f4d9ff166"
+            ]
+        ]
+    },
+    {
+        "id": "376f122050637a93",
+        "type": "mqtt out",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "topic": "IoTlab/light_desired",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 940,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c7fe8d46dd8dd1e4",
+        "type": "debug",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "f4efacf24882424a",
+        "type": "ui_text_input",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "label": "Light threshold",
+        "tooltip": "Changes the threshold of light",
+        "group": "5d79457539c51f7d",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "number",
+        "delay": "1000",
+        "topic": "IoTlab/temperature_desired",
+        "topicType": "msg",
+        "x": 480,
+        "y": 560,
+        "wires": [
+            [
+                "c7fe8d46dd8dd1e4",
+                "376f122050637a93"
+            ]
+        ]
+    },
+    {
+        "id": "1ac005799d717d0b",
+        "type": "debug",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "afb39ea6eeb78014",
+        "type": "mqtt in",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "topic": "IoTlab/light_intensity",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "3c33d56931cbc3e0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 490,
+        "y": 280,
+        "wires": [
+            [
+                "1ac005799d717d0b",
+                "19250da3a0a50650"
+            ]
+        ]
+    },
+    {
+        "id": "19250da3a0a50650",
+        "type": "ui_gauge",
+        "z": "9da94ae86f1c6ba4",
+        "name": "Light Level",
+        "group": "5d79457539c51f7d",
+        "order": 1,
+        "width": "7",
+        "height": "10",
+        "gtype": "gage",
+        "title": "Light Intensity",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1500",
+        "colors": [
+            "#000000",
+            "#8c8c8c",
+            "#ffffff"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 910,
+        "y": 280,
+        "wires": []
     },
     {
         "id": "3c33d56931cbc3e0",
@@ -235,21 +421,21 @@
         "sessionExpiry": ""
     },
     {
-        "id": "5d79457539c51f7d",
-        "type": "ui_group",
-        "name": "Dashboard",
-        "tab": "db29f39ab6f92a6e",
-        "order": 1,
-        "disp": false,
-        "width": "20",
-        "collapse": false
-    },
-    {
         "id": "06557fe02e4c8820",
         "type": "ui_group",
         "name": "ButtonGroup",
         "tab": "db29f39ab6f92a6e",
         "order": 2,
+        "disp": false,
+        "width": "20",
+        "collapse": false
+    },
+    {
+        "id": "5d79457539c51f7d",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "db29f39ab6f92a6e",
+        "order": 1,
         "disp": false,
         "width": "20",
         "collapse": false
