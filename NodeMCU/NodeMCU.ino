@@ -64,9 +64,9 @@ void callback(String topic, byte* message, unsigned int length) {
     Serial.println("We have received a response: " + messagein);
     email_sent = false;
     
-    if(messagein == "YES"){
+    if(messagein == "a"){
       turn_motor_on();
-    } else if(messagein == "NO"){
+    } else if(messagein == "b"){
       turn_motor_off();
     }
   }
