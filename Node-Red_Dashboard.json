@@ -20,8 +20,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 490,
-        "y": 180,
+        "x": 130,
+        "y": 160,
         "wires": [
             [
                 "d71ce58b2407ea98",
@@ -42,8 +42,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 710,
-        "y": 140,
+        "x": 350,
+        "y": 120,
         "wires": []
     },
     {
@@ -59,8 +59,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 710,
-        "y": 60,
+        "x": 350,
+        "y": 40,
         "wires": []
     },
     {
@@ -76,8 +76,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 480,
-        "y": 100,
+        "x": 120,
+        "y": 80,
         "wires": [
             [
                 "ec41b484e095ce8c",
@@ -104,8 +104,8 @@
         "payloadType": "str",
         "topic": "IoTlab/light",
         "topicType": "msg",
-        "x": 470,
-        "y": 700,
+        "x": 830,
+        "y": 400,
         "wires": [
             [
                 "0cbac9df34706421"
@@ -131,8 +131,8 @@
         "payloadType": "str",
         "topic": "IoTlab/light",
         "topicType": "msg",
-        "x": 470,
-        "y": 740,
+        "x": 830,
+        "y": 440,
         "wires": [
             [
                 "0cbac9df34706421"
@@ -161,8 +161,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 940,
-        "y": 180,
+        "x": 580,
+        "y": 160,
         "wires": []
     },
     {
@@ -187,8 +187,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 920,
-        "y": 100,
+        "x": 560,
+        "y": 80,
         "wires": []
     },
     {
@@ -205,8 +205,8 @@
         "correl": "",
         "expiry": "",
         "broker": "3c33d56931cbc3e0",
-        "x": 910,
-        "y": 720,
+        "x": 1270,
+        "y": 420,
         "wires": []
     },
     {
@@ -223,8 +223,8 @@
         "correl": "",
         "expiry": "",
         "broker": "3c33d56931cbc3e0",
-        "x": 960,
-        "y": 460,
+        "x": 600,
+        "y": 380,
         "wires": []
     },
     {
@@ -240,8 +240,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 710,
-        "y": 420,
+        "x": 350,
+        "y": 340,
         "wires": []
     },
     {
@@ -260,8 +260,8 @@
         "delay": "1000",
         "topic": "IoTlab/temperature_desired",
         "topicType": "msg",
-        "x": 500,
-        "y": 460,
+        "x": 140,
+        "y": 380,
         "wires": [
             [
                 "0b24bd68bc99d89d",
@@ -283,8 +283,8 @@
         "correl": "",
         "expiry": "",
         "broker": "3c33d56931cbc3e0",
-        "x": 940,
-        "y": 560,
+        "x": 580,
+        "y": 480,
         "wires": []
     },
     {
@@ -300,8 +300,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 710,
-        "y": 520,
+        "x": 350,
+        "y": 440,
         "wires": []
     },
     {
@@ -320,8 +320,8 @@
         "delay": "1000",
         "topic": "IoTlab/temperature_desired",
         "topicType": "msg",
-        "x": 480,
-        "y": 560,
+        "x": 120,
+        "y": 480,
         "wires": [
             [
                 "c7fe8d46dd8dd1e4",
@@ -342,8 +342,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 710,
-        "y": 240,
+        "x": 350,
+        "y": 220,
         "wires": []
     },
     {
@@ -359,8 +359,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 490,
-        "y": 280,
+        "x": 130,
+        "y": 260,
         "wires": [
             [
                 "1ac005799d717d0b",
@@ -390,9 +390,138 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 910,
-        "y": 280,
+        "x": 550,
+        "y": 260,
         "wires": []
+    },
+    {
+        "id": "8d470d5280d41934",
+        "type": "mqtt out",
+        "z": "9da94ae86f1c6ba4",
+        "d": true,
+        "name": "",
+        "topic": "IoTlab/send_email",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 1290,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "989cb23582301e2e",
+        "type": "inject",
+        "z": "9da94ae86f1c6ba4",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "IoTlab/send_email",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 860,
+        "y": 220,
+        "wires": [
+            [
+                "8d470d5280d41934",
+                "9bdbb2f6e0b8f123"
+            ]
+        ]
+    },
+    {
+        "id": "9bdbb2f6e0b8f123",
+        "type": "debug",
+        "z": "9da94ae86f1c6ba4",
+        "d": true,
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a948a94a33384a67",
+        "type": "mqtt in",
+        "z": "9da94ae86f1c6ba4",
+        "d": true,
+        "name": "",
+        "topic": "IoTlab/send_email",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "3c33d56931cbc3e0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 850,
+        "y": 280,
+        "wires": [
+            [
+                "8d470d5280d41934",
+                "9bdbb2f6e0b8f123"
+            ]
+        ]
+    },
+    {
+        "id": "578018877c5e2075",
+        "type": "debug",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "baff33ef52028e1c",
+        "type": "mqtt in",
+        "z": "9da94ae86f1c6ba4",
+        "name": "",
+        "topic": "IoTlab/received_email",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "3c33d56931cbc3e0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 860,
+        "y": 80,
+        "wires": [
+            [
+                "578018877c5e2075"
+            ]
+        ]
     },
     {
         "id": "3c33d56931cbc3e0",

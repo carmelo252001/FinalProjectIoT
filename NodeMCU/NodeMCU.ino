@@ -60,6 +60,15 @@ void callback(String topic, byte* message, unsigned int length) {
   }else if(topic=="IoTlab/light_desired"){
     desired_light = messagein.toInt();
     Serial.println("Received a new desired light intensity " + messagein);
+  }else if(topic=="IoTlab/received_email"){
+    Serial.println("We have received a response: " + messagein);
+    email_sent = false;
+    
+    if(messagein == "YES"){
+      turn_motor_on();
+    } else if(messagein == "NO"){
+      turn_motor_off();
+    }
   }
 }
 
@@ -73,6 +82,7 @@ void reconnect() {
       client.subscribe("IoTlab/light");
       client.subscribe("IoTlab/temperature_desired");
       client.subscribe("IoTlab/light_desired");
+      client.subscribe("IoTlab/received_email");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -82,14 +92,14 @@ void reconnect() {
   }
 }
 
-void send_email(String message_to_send){
-  EMailSender emailSend("waterisnoticecream@gmail.com", "Banana123!");
-  EMailSender::EMailMessage message;
-  message.subject = "Subject";
-  message.message = message_to_send;
-  EMailSender::Response resp = emailSend.send("waterisnoticecream@gmail.com", message);
-  Serial.print("Message is being sent... ");
-  Serial.println(resp.desc);
+void turn_motor_on(){
+  //add code to turn on the motor
+  Serial.println("Turn on the motor!");
+}
+
+void turn_motor_off(){
+  //add code to turn off the motor
+  Serial.println("Turn off the motor!");
 }
 
 void turn_on_lights(){
@@ -102,6 +112,16 @@ void turn_off_lights(){
   digitalWrite(D3, LOW);
   digitalWrite(D4, LOW);
   send_email("The light intensity is higher than threshold. Lights are OFF!");
+}
+
+void send_email(String message_to_send){
+  EMailSender emailSend("waterisnoticecream@gmail.com", "Banana123!");
+  EMailSender::EMailMessage message;
+  message.subject = "Subject";
+  message.message = message_to_send;
+  EMailSender::Response resp = emailSend.send("waterisnoticecream@gmail.com", message);
+  Serial.print("Message is sending... ");
+  Serial.println(resp.desc);
 }
 
 void setup() {
@@ -141,7 +161,12 @@ void loop() {
   client.publish("IoTlab/light_intensity", lightArr);
 
   if(temp > desired_temperature && !email_sent){
-    send_email("Would you like to turn on the fan? (YES or NO)");
+    double send_email= 1;
+    
+    char tempSend [8];
+    dtostrf(send_email,6,2,tempSend);
+    
+    client.publish("IoTlab/send_email", tempSend);
     email_sent = true;
   }
 
