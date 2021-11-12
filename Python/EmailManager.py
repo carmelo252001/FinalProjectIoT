@@ -3,6 +3,8 @@ import imaplib
 import smtplib
 import time
 
+import RPi.GPIO as GPIO
+
 import paho.mqtt.client as paho
 import paho.mqtt.publish as publish
 from paho.mqtt import client as mqtt_client
@@ -10,6 +12,12 @@ from paho.mqtt import client as mqtt_client
 # Set up the global variables
 global client
 global no_response
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+GPIO.setup(25, GPIO.OUT)
 
 # Set up the MQTT connection
 client = paho.Client("client-001")
@@ -60,6 +68,20 @@ def subscribe(client: mqtt_client):
 def turn_motor_on():
     print("Turning motor on...")
     publish.single("IoTlab/received_email", 'a')
+    
+    pulse1 = GPIO.PWM(23, 30)
+    GPIO.output(24, GPIO.LOW)
+    pulse2 = GPIO.PWM(25, 30)
+    pulse1.start(0)
+    pulse2.start(0)
+    
+    pulse1.ChangeDutyCycle(30)
+    pulse2.ChangeDutyCycle(30)
+    
+    print("Starting the motor")
+    GPIO.output(25, GPIO.LOW)
+    GPIO.cleanup()
+    
     print("Turned motor on!")
 
 
@@ -67,6 +89,24 @@ def turn_motor_on():
 def turn_motor_off():
     print("Turning motor off...")
     publish.single("IoTlab/received_email", 'b')
+    
+    pulse1 = GPIO.PWM(23, 30)
+    GPIO.output(24, GPIO.LOW)
+    pulse2 = GPIO.PWM(25, 30)
+    pulse1.start(0)
+    pulse2.start(0)
+    
+    GPIO.output(23, GPIO.HIGH)
+    GPIO.output(24, GPIO.LOW)
+    GPIO.output(25, GPIO.HIGH)
+
+    time.sleep(3)
+
+    print("Done closing the motor")
+    GPIO.output(25, GPIO.LOW)
+    GPIO.cleanup()
+    
+    print("Turned motor on!")
     print("Turned motor off!")
 
 
@@ -137,13 +177,15 @@ def email_watcher():
         time.sleep(3)
 
 
-# The run method
-def run():
-    client = connect_mqtt()
-    subscribe(client)
-    client.loop_forever()
+# # The run method
+# def run():
+#     client = connect_mqtt()
+#     subscribe(client)
+#     client.loop_forever()
+# 
+# 
+# # Starts the main method and loops it
+# if __name__ == '__main__':
+#     run()
 
-
-# Starts the main method and loops it
-if __name__ == '__main__':
-    run()
+turn_motor_on()
