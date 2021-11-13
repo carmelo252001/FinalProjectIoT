@@ -3,27 +3,29 @@ import imaplib
 import smtplib
 import time
 
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 
 import paho.mqtt.client as paho
 import paho.mqtt.publish as publish
 from paho.mqtt import client as mqtt_client
 
+from datetime import datetime
+
 # Set up the global variables
 global client
 global no_response
 
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(23, GPIO.OUT)
-GPIO.setup(24, GPIO.OUT)
-GPIO.setup(25, GPIO.OUT)
+# GPIO.setwarnings(False)
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(21, GPIO.OUT)
+# GPIO.setup(23, GPIO.OUT)
+# GPIO.setup(24, GPIO.OUT)
+# GPIO.setup(25, GPIO.OUT)
 
 # Set up the MQTT connection
 client = paho.Client("client-001")
 broker = 'localhost'
 port = 1883
-topic = "IoTlab/send_email"
 client_id = "Client001"
 response = False
 
@@ -48,67 +50,95 @@ def connect_mqtt() -> mqtt_client:
     return client
 
 
-# Subscribe to the MQTT topic
+# Subscribe to the MQTT topic and waits for messages
 def subscribe(client: mqtt_client):
     global no_response
     no_response = True
 
     # Is called whenever a message is received from the subscriptions
     def on_message(client, userdata, msg):
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+
         if msg.topic == 'IoTlab/send_email':
-            print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+            print("Received a message from send email.")
             send_email("Would you like to turn on the fan? (YES or NO)")
             while no_response:
                 email_watcher()
+        elif msg.topic == 'IoTlab/buzzer':
+            print("Received a message from buzzer.")
+            turn_buzzer_on()
+        elif msg.topic == 'IoTlab/message_carmelo':
+            print("Received a message from message_carmelo.")
+            message = "At " + current_time + " time, Carmelo was here."
+            send_email(message)
+        elif msg.topic == 'IoTlab/message_akash':
+            print("Received a message from message_akash.")
+            message = "At " + current_time + " time, Akash was here."
+            send_email(message)
+
     client.subscribe("IoTlab/send_email")
+    client.subscribe("IoTlab/buzzer")
+    client.subscribe("IoTlab/message_carmelo")
+    client.subscribe("IoTlab/message_akash")
     client.on_message = on_message
 
 
-# Sends a message to the NodeMCU to turn the motor on
+# Turns the motor on
 def turn_motor_on():
     print("Turning motor on...")
     publish.single("IoTlab/received_email", 'a')
     
-    pulse1 = GPIO.PWM(23, 30)
-    GPIO.output(24, GPIO.LOW)
-    pulse2 = GPIO.PWM(25, 30)
-    pulse1.start(0)
-    pulse2.start(0)
-    
-    pulse1.ChangeDutyCycle(30)
-    pulse2.ChangeDutyCycle(30)
-    
-    print("Starting the motor")
-    GPIO.output(25, GPIO.LOW)
-    GPIO.cleanup()
+    # pulse1 = GPIO.PWM(23, 30)
+    # GPIO.output(24, GPIO.LOW)
+    # pulse2 = GPIO.PWM(25, 30)
+    # pulse1.start(0)
+    # pulse2.start(0)
+    #
+    # pulse1.ChangeDutyCycle(30)
+    # pulse2.ChangeDutyCycle(30)
+    #
+    # print("Starting the motor")
+    # GPIO.output(25, GPIO.LOW)
+    # GPIO.cleanup()
     
     print("Turned motor on!")
 
 
-# Sends a message to the NodeMCU to turn the motor off
+# Turns the motor off
 def turn_motor_off():
     print("Turning motor off...")
-    publish.single("IoTlab/received_email", 'b')
+    publish.single("IoTlab/received_email", 'a')
     
-    pulse1 = GPIO.PWM(23, 30)
-    GPIO.output(24, GPIO.LOW)
-    pulse2 = GPIO.PWM(25, 30)
-    pulse1.start(0)
-    pulse2.start(0)
-    
-    GPIO.output(23, GPIO.HIGH)
-    GPIO.output(24, GPIO.LOW)
-    GPIO.output(25, GPIO.HIGH)
+    # pulse1 = GPIO.PWM(23, 30)
+    # GPIO.output(24, GPIO.LOW)
+    # pulse2 = GPIO.PWM(25, 30)
+    # pulse1.start(0)
+    # pulse2.start(0)
+    #
+    # GPIO.output(23, GPIO.HIGH)
+    # GPIO.output(24, GPIO.LOW)
+    # GPIO.output(25, GPIO.HIGH)
+    #
+    # time.sleep(3)
+    #
+    # print("Done closing the motor")
+    # GPIO.output(25, GPIO.LOW)
+    # GPIO.cleanup()
 
-    time.sleep(3)
-
-    print("Done closing the motor")
-    GPIO.output(25, GPIO.LOW)
-    GPIO.cleanup()
-    
-    print("Turned motor on!")
     print("Turned motor off!")
 
+
+# Sets the buzzer on for 3 seconds before turning off again
+def turn_buzzer_on():
+    print("Turning buzzer on!")
+
+    # GPIO.output(21, True)
+    # time.sleep(3)
+    # GPIO.output(21, False)
+    # GPIO.cleanup()
+
+    print("Turned buzzer off!")
 
 # Send an email to the user containing the desired text
 def send_email(user_text):
@@ -116,7 +146,7 @@ def send_email(user_text):
     sender_email = "waterisnoticecream@gmail.com"
     receiver_email = "waterisnoticecream@gmail.com"
     password = "Banana123!"
-    subject = "Temperature has reached threshold!"
+    subject = "Message from the Dashboard"
     text = user_text
     message = 'Subject: {}\n\n{}'.format(subject, text)
 
@@ -177,15 +207,13 @@ def email_watcher():
         time.sleep(3)
 
 
-# # The run method
-# def run():
-#     client = connect_mqtt()
-#     subscribe(client)
-#     client.loop_forever()
-# 
-# 
-# # Starts the main method and loops it
-# if __name__ == '__main__':
-#     run()
+# The run method
+def run():
+    client = connect_mqtt()
+    subscribe(client)
+    client.loop_forever()
 
-turn_motor_on()
+
+# Starts the main method and loops it
+if __name__ == '__main__':
+    run()

@@ -1,8 +1,24 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <EMailSender.h>
+#include <SPI.h>
+#include <MFRC522.h>
 #include "DHTesp.h"
+#define D3 0
+#define D4 2
+constexpr uint8_t RST_PIN = D3;
+constexpr uint8_t SS_PIN = D4;
 
+
+// Set up the variables for RFID
+MFRC522 rfid(SS_PIN, RST_PIN);
+MFRC522::MIFARE_Key key;
+String tag;
+String current_user = "Carmelo";
+int prefered_temp_carmelo = 20;
+int prefered_light_carmelo = 700;
+int prefered_temp_akash = 15;
+int prefered_light_akash = 600;
 
 // Set up the MQTT  and WiFi connection
 WiFiClient vanieriot;
@@ -17,6 +33,7 @@ int desired_temperature = 40;
 bool light_is_on = false;
 int desired_light = 900;
 bool email_sent = false;
+bool email_received = false;
 
 
 // Set up the WiFi connection
@@ -64,17 +81,23 @@ void callback(String topic, byte* message, unsigned int length) {
   } else if(topic=="IoTlab/temperature_desired") {
     desired_temperature = messagein.toInt();
     Serial.println("Received a new desired temperature " + messagein);
+    if (current_user == "Carmelo") {
+      prefered_temp_carmelo = messagein.toInt();
+    } else {
+      prefered_temp_akash = messagein.toInt();
+    }
   } else if(topic=="IoTlab/light_desired") {
     desired_light = messagein.toInt();
     Serial.println("Received a new desired light intensity " + messagein);
+    if (current_user == "Carmelo") {
+      prefered_light_carmelo = messagein.toInt();
+    } else {
+      prefered_light_akash = messagein.toInt();
+    }
   } else if(topic=="IoTlab/received_email") {
     Serial.println("We have received a response: " + messagein);
+    email_received = true;
     email_sent = false;
-    if (messagein == "a") {
-      turn_motor_on();
-    } else if (messagein == "b") {
-      turn_motor_off();
-    }
   }
 }
 
@@ -100,32 +123,18 @@ void reconnect() {
 }
 
 
-// Turns the motor on
-void turn_motor_on(){
-  //add code to turn on the motor
-  Serial.println("Turn on the motor!");
-}
-
-
-// Turns the motor off
-void turn_motor_off(){
-  //add code to turn off the motor
-  Serial.println("Turn off the motor!");
-}
-
-
 // Turns the blue and green lights on
 void turn_on_lights(){
-  digitalWrite(D3, HIGH);
-  digitalWrite(D4, HIGH);
+  digitalWrite(D7, HIGH);
+  digitalWrite(D8, HIGH);
   send_email("The light intensity is lower than threshold. Lights are now ON!");
 }
 
 
 // Turns the blue and green lights off
 void turn_off_lights(){
-  digitalWrite(D3, LOW);
-  digitalWrite(D4, LOW);
+  digitalWrite(D7, LOW);
+  digitalWrite(D8, LOW);
   send_email("The light intensity is higher than threshold. Lights are now OFF!");
 }
 
@@ -152,11 +161,15 @@ void setup() {
 
   // Puts the lights in their default position
   pinMode(D1, OUTPUT);
-  pinMode(D3, OUTPUT);
-  pinMode(D4, OUTPUT);
+  pinMode(D7, OUTPUT);
+  pinMode(D8, OUTPUT);
   digitalWrite(D1, HIGH);
-  digitalWrite(D3, LOW);
-  digitalWrite(D4, LOW);
+  digitalWrite(D7, LOW);
+  digitalWrite(D8, LOW);
+
+  // Set up for the RFID
+  SPI.begin(); // Init SPI bus
+  rfid.PCD_Init(); // Init MFRC522
 }
 
 
@@ -188,7 +201,7 @@ void loop() {
   client.publish("IoTlab/light_intensity", lightArr);
 
   // Sends an email to the user if temperature is below desired threshold
-  if (temp > desired_temperature && !email_sent) {
+  if (temp > desired_temperature && !email_sent && !email_received) {
     double send_email= 1;
     
     char tempSend [8];
@@ -198,13 +211,89 @@ void loop() {
     email_sent = true;
   }
 
-  // Sends an email to the user if temperature is below desired threshold
+  // Verifies if email was received from the user
+  if (temp < desired_temperature){
+    email_received = false;
+  }
+
+  // Sends an email to the user if light is below desired threshold
   if (light_intensity < desired_light && !light_is_on) {
     turn_on_lights();
     light_is_on = true;
   } else if (light_intensity > desired_light && light_is_on) {
     turn_off_lights();
     light_is_on = false;
+  }
+
+  // Loops used to read the RFID tags
+  if ( ! rfid.PICC_IsNewCardPresent())
+    return;
+  if (rfid.PICC_ReadCardSerial()) {
+    for (byte i = 0; i < 4; i++) {
+      tag += rfid.uid.uidByte[i];
+    }
+    
+    Serial.println(tag);
+    if (tag == "204173223110" && current_user == "Akash") {
+      // Creates a notification on top of the screen
+      String message = "Welcome back Carmelo!";
+      char tempTag [25];
+      message.toCharArray(tempTag, message.length());
+      client.publish("IoTlab/current_user_notification", tempTag);
+
+      // Prints out the name of the user on top of the screen
+      String message2 = "Hello Carmelo";
+      char tempTag2 [25];
+      message2.toCharArray(tempTag2, message2.length() + 1);
+      client.publish("IoTlab/current_user", tempTag2);
+
+      // Sends the users prefered temperature and light threshold
+      char tempTag3 [8];
+      dtostrf(prefered_temp_carmelo ,6,2,tempTag3);
+      client.publish("IoTlab/user_temperature_threshold", tempTag3);
+      char tempTag4 [8];
+      dtostrf(prefered_light_carmelo ,6,2,tempTag4);
+      client.publish("IoTlab/user_light_threshold", tempTag4);
+
+      // Sends the email to the admin saying that Carmelo was here
+      client.publish("IoTlab/message_carmelo", tempTag2);
+      current_user = "Carmelo";
+    } else if (tag == "9924674" && current_user == "Carmelo") {
+      // Creates a notification on top of the screen
+      String message = "Welcome back Akash!";
+      char tempTag [25];
+      message.toCharArray(tempTag, message.length());
+      client.publish("IoTlab/current_user_notification", tempTag);
+
+      // Prints out the name of the user on top of the screen
+      String message2 = "Hello Akash";
+      char tempTag2 [25];
+      message2.toCharArray(tempTag2, message2.length() + 1);
+      client.publish("IoTlab/current_user", tempTag2);
+
+      // Sends the users prefered temperature and light threshold
+      char tempTag3 [8];
+      dtostrf(prefered_temp_akash ,6,2,tempTag3);
+      client.publish("IoTlab/user_temperature_threshold", tempTag3);
+      char tempTag4 [8];
+      dtostrf(prefered_light_akash ,6,2,tempTag4);
+      client.publish("IoTlab/user_light_threshold", tempTag4);
+
+      // Sends the email to the admin saying that Akash was here
+      client.publish("IoTlab/message_akash", tempTag2);
+      current_user = "Akash";
+    } else if (tag != "204173223110" && tag != "9924674"){
+      // Sends an email saying that an invalid user tried entering and sets buzzer
+      String message = "Invalid user!!!";
+      char tempTag [25];
+      message.toCharArray(tempTag, message.length());
+      client.publish("IoTlab/current_user_notification", tempTag);
+      client.publish("IoTlab/buzzer", tempTag);
+    }
+    
+    tag = "";
+    rfid.PICC_HaltA();
+    rfid.PCD_StopCrypto1();
   }
 
   delay(10000);
