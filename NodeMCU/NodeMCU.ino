@@ -14,7 +14,7 @@ constexpr uint8_t SS_PIN = D4;
 MFRC522 rfid(SS_PIN, RST_PIN);
 MFRC522::MIFARE_Key key;
 String tag;
-String current_user = "Carmelo";
+String current_user = "no";
 int prefered_temp_carmelo = 20;
 int prefered_light_carmelo = 700;
 int prefered_temp_akash = 15;
@@ -25,7 +25,7 @@ WiFiClient vanieriot;
 PubSubClient client(vanieriot);
 const char* ssid = "TP-LINK_516E";
 const char* password = "21757969";
-const char* mqtt_server = "192.168.0.107";
+const char* mqtt_server = "192.168.0.109";
 
 // Set up the variables used with the sensors
 DHTesp dht;
@@ -170,6 +170,11 @@ void setup() {
   // Set up for the RFID
   SPI.begin(); // Init SPI bus
   rfid.PCD_Init(); // Init MFRC522
+
+  String message = "No user signed in yet, not saving preferences.";
+  char tempTag [50];
+  message.toCharArray(tempTag, message.length());
+  client.publish("IoTlab/current_user", tempTag);
 }
 
 
@@ -234,7 +239,7 @@ void loop() {
     }
     
     Serial.println(tag);
-    if (tag == "204173223110" && current_user == "Akash") {
+    if (tag == "204173223110" && current_user != "Carmelo") {
       // Creates a notification on top of the screen
       String message = "Welcome back Carmelo!";
       char tempTag [25];
@@ -258,7 +263,7 @@ void loop() {
       // Sends the email to the admin saying that Carmelo was here
       client.publish("IoTlab/message_carmelo", tempTag2);
       current_user = "Carmelo";
-    } else if (tag == "9924674" && current_user == "Carmelo") {
+    } else if (tag == "9924674" && current_user != "Akash") {
       // Creates a notification on top of the screen
       String message = "Welcome back Akash!";
       char tempTag [25];
