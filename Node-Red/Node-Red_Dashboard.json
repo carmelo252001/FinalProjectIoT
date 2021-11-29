@@ -1,6 +1,6 @@
 [
     {
-        "id": "9da94ae86f1c6ba4",
+        "id": "52f53edf5237f2ef",
         "type": "tab",
         "label": "DashboardSmartHome",
         "disabled": false,
@@ -8,9 +8,9 @@
         "env": []
     },
     {
-        "id": "e4796086cb381dfa",
+        "id": "b292be6cf7813f36",
         "type": "mqtt in",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "topic": "IoTlab/temperature",
         "qos": "2",
@@ -24,15 +24,15 @@
         "y": 300,
         "wires": [
             [
-                "d71ce58b2407ea98",
-                "5c29b504143a1dbd"
+                "2e59bf888b72a5e7",
+                "f8ea95f0c1b4e146"
             ]
         ]
     },
     {
-        "id": "d71ce58b2407ea98",
+        "id": "2e59bf888b72a5e7",
         "type": "debug",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -47,9 +47,9 @@
         "wires": []
     },
     {
-        "id": "ec41b484e095ce8c",
+        "id": "10952634d712294b",
         "type": "debug",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -64,9 +64,9 @@
         "wires": []
     },
     {
-        "id": "97b541c085b9b849",
+        "id": "bd74c090c5945e20",
         "type": "mqtt in",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "topic": "IoTlab/humidity",
         "qos": "2",
@@ -80,15 +80,15 @@
         "y": 220,
         "wires": [
             [
-                "ec41b484e095ce8c",
-                "53523552e070cb95"
+                "10952634d712294b",
+                "803cfe7d4d476222"
             ]
         ]
     },
     {
-        "id": "ed944a84e235ab40",
+        "id": "d263ecec379544b2",
         "type": "ui_button",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "group": "06557fe02e4c8820",
         "order": 2,
@@ -105,48 +105,21 @@
         "topic": "IoTlab/light",
         "topicType": "msg",
         "x": 810,
-        "y": 260,
+        "y": 220,
         "wires": [
             [
-                "0cbac9df34706421"
+                "4872989a9a562c3d"
             ]
         ]
     },
     {
-        "id": "00813127bdaacd5b",
-        "type": "ui_button",
-        "z": "9da94ae86f1c6ba4",
-        "name": "",
-        "group": "06557fe02e4c8820",
-        "order": 4,
-        "width": "15",
-        "height": 1,
-        "passthru": false,
-        "label": "Turn light Off",
-        "tooltip": "Turns the light Off",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "OFF",
-        "payloadType": "str",
-        "topic": "IoTlab/light",
-        "topicType": "msg",
-        "x": 810,
-        "y": 360,
-        "wires": [
-            [
-                "0cbac9df34706421"
-            ]
-        ]
-    },
-    {
-        "id": "5c29b504143a1dbd",
+        "id": "f8ea95f0c1b4e146",
         "type": "ui_gauge",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "Temperature Gauge",
         "group": "5d79457539c51f7d",
         "order": 1,
-        "width": 10,
+        "width": "10",
         "height": 7,
         "gtype": "gage",
         "title": "Temperature",
@@ -166,14 +139,14 @@
         "wires": []
     },
     {
-        "id": "53523552e070cb95",
+        "id": "803cfe7d4d476222",
         "type": "ui_gauge",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "Humidity Gauge",
         "group": "5d79457539c51f7d",
         "order": 2,
-        "width": 10,
-        "height": 7,
+        "width": "10",
+        "height": "7",
         "gtype": "wave",
         "title": "Humidity",
         "label": "%",
@@ -192,9 +165,9 @@
         "wires": []
     },
     {
-        "id": "0cbac9df34706421",
+        "id": "4872989a9a562c3d",
         "type": "mqtt out",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "topic": "IoTlab/light",
         "qos": "",
@@ -206,116 +179,13 @@
         "expiry": "",
         "broker": "3c33d56931cbc3e0",
         "x": 1250,
-        "y": 320,
+        "y": 280,
         "wires": []
     },
     {
-        "id": "596ea18f4d9ff166",
-        "type": "mqtt out",
-        "z": "9da94ae86f1c6ba4",
-        "name": "",
-        "topic": "IoTlab/temperature_desired",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "3c33d56931cbc3e0",
-        "x": 940,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "14e55efdee72a025",
-        "type": "ui_text_input",
-        "z": "9da94ae86f1c6ba4",
-        "name": "",
-        "label": "Temperature threshold",
-        "tooltip": "Changes the temperature threshold",
-        "group": "751430cd5e819a2c",
-        "order": 1,
-        "width": "10",
-        "height": 1,
-        "passthru": false,
-        "mode": "text",
-        "delay": "3000",
-        "topic": "IoTlab/temperature_desired",
-        "topicType": "msg",
-        "x": 480,
-        "y": 520,
-        "wires": [
-            [
-                "596ea18f4d9ff166",
-                "0b24bd68bc99d89d"
-            ]
-        ]
-    },
-    {
-        "id": "376f122050637a93",
-        "type": "mqtt out",
-        "z": "9da94ae86f1c6ba4",
-        "name": "",
-        "topic": "IoTlab/light_desired",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "3c33d56931cbc3e0",
-        "x": 920,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "c7fe8d46dd8dd1e4",
+        "id": "1d744cb4b735a211",
         "type": "debug",
-        "z": "9da94ae86f1c6ba4",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 690,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "f4efacf24882424a",
-        "type": "ui_text_input",
-        "z": "9da94ae86f1c6ba4",
-        "name": "",
-        "label": "Light threshold",
-        "tooltip": "Changes the threshold of light",
-        "group": "751430cd5e819a2c",
-        "order": 3,
-        "width": "10",
-        "height": 1,
-        "passthru": true,
-        "mode": "text",
-        "delay": "1000",
-        "topic": "IoTlab/temperature_desired",
-        "topicType": "msg",
-        "x": 460,
-        "y": 640,
-        "wires": [
-            [
-                "c7fe8d46dd8dd1e4",
-                "376f122050637a93"
-            ]
-        ]
-    },
-    {
-        "id": "1ac005799d717d0b",
-        "type": "debug",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -330,9 +200,9 @@
         "wires": []
     },
     {
-        "id": "afb39ea6eeb78014",
+        "id": "bde05652418167c1",
         "type": "mqtt in",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "topic": "IoTlab/light_intensity",
         "qos": "2",
@@ -346,15 +216,15 @@
         "y": 400,
         "wires": [
             [
-                "1ac005799d717d0b",
-                "3230e8360f414313"
+                "1d744cb4b735a211",
+                "b3c16cb53a9df50e"
             ]
         ]
     },
     {
-        "id": "578018877c5e2075",
+        "id": "5fe13f8392ff38cf",
         "type": "debug",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -369,9 +239,9 @@
         "wires": []
     },
     {
-        "id": "baff33ef52028e1c",
+        "id": "d26990bff67cabdb",
         "type": "mqtt in",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "topic": "IoTlab/received_email",
         "qos": "2",
@@ -385,15 +255,15 @@
         "y": 140,
         "wires": [
             [
-                "578018877c5e2075"
+                "5fe13f8392ff38cf"
             ]
         ]
     },
     {
-        "id": "e86aca02df7b0697",
+        "id": "df416647c9a5d689",
         "type": "ui_text",
-        "z": "9da94ae86f1c6ba4",
-        "group": "aceddb58673c05c4",
+        "z": "52f53edf5237f2ef",
+        "group": "82c633584d5f3bdf",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -406,9 +276,9 @@
         "wires": []
     },
     {
-        "id": "0cb7f07e671f59cb",
+        "id": "63f956c5d7aab166",
         "type": "mqtt in",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "topic": "IoTlab/current_user",
         "qos": "2",
@@ -422,18 +292,18 @@
         "y": 140,
         "wires": [
             [
-                "e86aca02df7b0697"
+                "df416647c9a5d689"
             ]
         ]
     },
     {
-        "id": "3230e8360f414313",
+        "id": "b3c16cb53a9df50e",
         "type": "ui_gauge",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "Light Gauge",
         "group": "5d79457539c51f7d",
         "order": 3,
-        "width": 10,
+        "width": "10",
         "height": 7,
         "gtype": "gage",
         "title": "Light",
@@ -453,9 +323,9 @@
         "wires": []
     },
     {
-        "id": "6cfcc07d2d5b4c74",
+        "id": "1269860e8682221a",
         "type": "mqtt in",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "topic": "IoTlab/current_user_notification",
         "qos": "2",
@@ -469,14 +339,14 @@
         "y": 80,
         "wires": [
             [
-                "592d09a68179baaa"
+                "8f2e50ccff850e0c"
             ]
         ]
     },
     {
-        "id": "592d09a68179baaa",
+        "id": "8f2e50ccff850e0c",
         "type": "ui_toast",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "position": "top right",
         "displayTime": "3",
         "highlight": "",
@@ -492,13 +362,13 @@
         "wires": []
     },
     {
-        "id": "50c9247a2bb36678",
+        "id": "54d4338fe70161bb",
         "type": "ui_text",
-        "z": "9da94ae86f1c6ba4",
-        "group": "751430cd5e819a2c",
+        "z": "52f53edf5237f2ef",
+        "group": "4fe1f2adfa81ad28",
         "order": 2,
         "width": "10",
-        "height": "1",
+        "height": "2",
         "name": "Spacer",
         "label": "",
         "format": "",
@@ -508,9 +378,133 @@
         "wires": []
     },
     {
-        "id": "56192cccf0150e47",
+        "id": "adf7f847220f65da",
+        "type": "mqtt out",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "topic": "IoTlab/light_desired",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 910,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "fcf078cc661f4fe9",
+        "type": "debug",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "36acff2e32c03b92",
         "type": "mqtt in",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "topic": "IoTlab/user_light_threshold",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "3c33d56931cbc3e0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 640,
+        "wires": [
+            [
+                "ecac60af54c6bd45"
+            ]
+        ]
+    },
+    {
+        "id": "ecac60af54c6bd45",
+        "type": "ui_text_input",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "label": "Light threshold",
+        "tooltip": "Changes the threshold of light",
+        "group": "4fe1f2adfa81ad28",
+        "order": 3,
+        "width": "10",
+        "height": "2",
+        "passthru": true,
+        "mode": "text",
+        "delay": "1000",
+        "topic": "IoTlab/temperature_desired",
+        "topicType": "msg",
+        "x": 460,
+        "y": 640,
+        "wires": [
+            [
+                "fcf078cc661f4fe9",
+                "adf7f847220f65da"
+            ]
+        ]
+    },
+    {
+        "id": "981e83bb743ac7bb",
+        "type": "mqtt out",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "topic": "IoTlab/temperature_desired",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 940,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "69dc074287e5d112",
+        "type": "ui_text_input",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "label": "Temperature threshold",
+        "tooltip": "Changes the temperature threshold",
+        "group": "4fe1f2adfa81ad28",
+        "order": 1,
+        "width": "10",
+        "height": "2",
+        "passthru": false,
+        "mode": "text",
+        "delay": "3000",
+        "topic": "IoTlab/temperature_desired",
+        "topicType": "msg",
+        "x": 480,
+        "y": 520,
+        "wires": [
+            [
+                "981e83bb743ac7bb",
+                "054ea8fbd2d68c99"
+            ]
+        ]
+    },
+    {
+        "id": "e23f4aafae8983ef",
+        "type": "mqtt in",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "topic": "IoTlab/user_temperature_threshold",
         "qos": "2",
@@ -524,35 +518,14 @@
         "y": 520,
         "wires": [
             [
-                "14e55efdee72a025"
+                "69dc074287e5d112"
             ]
         ]
     },
     {
-        "id": "e591fa0054145a31",
-        "type": "mqtt in",
-        "z": "9da94ae86f1c6ba4",
-        "name": "",
-        "topic": "IoTlab/user_light_threshold",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "3c33d56931cbc3e0",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 180,
-        "y": 640,
-        "wires": [
-            [
-                "f4efacf24882424a"
-            ]
-        ]
-    },
-    {
-        "id": "0b24bd68bc99d89d",
+        "id": "054ea8fbd2d68c99",
         "type": "debug",
-        "z": "9da94ae86f1c6ba4",
+        "z": "52f53edf5237f2ef",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -564,6 +537,292 @@
         "statusType": "auto",
         "x": 690,
         "y": 480,
+        "wires": []
+    },
+    {
+        "id": "07fe86f4eeb2db49",
+        "type": "mqtt out",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "topic": "IoTlab/desired_rssi",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 1250,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "4532e7a9d995fd87",
+        "type": "ui_text_input",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "label": "RSSI threshold",
+        "tooltip": "",
+        "group": "aa4cbd59a2cf1bb0",
+        "order": 5,
+        "width": "10",
+        "height": "1",
+        "passthru": true,
+        "mode": "number",
+        "delay": "1000",
+        "topic": "IoTlab/desired_rssi",
+        "topicType": "msg",
+        "x": 800,
+        "y": 800,
+        "wires": [
+            [
+                "de6058c96a241945",
+                "07fe86f4eeb2db49"
+            ]
+        ]
+    },
+    {
+        "id": "de6058c96a241945",
+        "type": "debug",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "5a10e08a1671c058",
+        "type": "ui_text",
+        "z": "52f53edf5237f2ef",
+        "group": "aa4cbd59a2cf1bb0",
+        "order": 4,
+        "width": "10",
+        "height": "1",
+        "name": "Spacer",
+        "label": "",
+        "format": "",
+        "layout": "row-center",
+        "x": 440,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "8a9307b0ddce5d5c",
+        "type": "ui_text",
+        "z": "52f53edf5237f2ef",
+        "group": "aa4cbd59a2cf1bb0",
+        "order": 1,
+        "width": "10",
+        "height": "1",
+        "name": "Spacer",
+        "label": "",
+        "format": "",
+        "layout": "row-center",
+        "x": 440,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "98e2ea2984944e11",
+        "type": "ui_text",
+        "z": "52f53edf5237f2ef",
+        "group": "aa4cbd59a2cf1bb0",
+        "order": 2,
+        "width": "10",
+        "height": "1",
+        "name": "Bluetooth Counter",
+        "label": "Number of Bluetooth devices: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 470,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "cdd5e911a2f42ba9",
+        "type": "mqtt in",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "topic": "IoTlab/light_intensity",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "3c33d56931cbc3e0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f5ea362ea80a971",
+        "type": "mqtt in",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "topic": "IoTlab/bluetooth_information",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "3c33d56931cbc3e0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 780,
+        "wires": [
+            [
+                "c7905ac0453119b3",
+                "98e2ea2984944e11"
+            ]
+        ]
+    },
+    {
+        "id": "c7905ac0453119b3",
+        "type": "debug",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "afed4e6295d8519e",
+        "type": "ui_text",
+        "z": "52f53edf5237f2ef",
+        "group": "aa4cbd59a2cf1bb0",
+        "order": 6,
+        "width": "10",
+        "height": "1",
+        "name": "Spacer",
+        "label": "",
+        "format": "",
+        "layout": "row-center",
+        "x": 440,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "8ea5636f8d8f3047",
+        "type": "ui_text",
+        "z": "52f53edf5237f2ef",
+        "group": "aa4cbd59a2cf1bb0",
+        "order": 3,
+        "width": "10",
+        "height": "1",
+        "name": "Spacer",
+        "label": "",
+        "format": "",
+        "layout": "row-center",
+        "x": 440,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "8c6e55fbef572106",
+        "type": "mqtt out",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "topic": "IoTlab/light",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 1250,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e5fd336236e81ce5",
+        "type": "ui_button",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "group": "06557fe02e4c8820",
+        "order": 4,
+        "width": "15",
+        "height": 1,
+        "passthru": false,
+        "label": "Turn light Off",
+        "tooltip": "Turns the light Off",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "topic": "IoTlab/light",
+        "topicType": "msg",
+        "x": 810,
+        "y": 320,
+        "wires": [
+            [
+                "8c6e55fbef572106"
+            ]
+        ]
+    },
+    {
+        "id": "4da0aadbcd12b455",
+        "type": "ui_button",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "group": "aa4cbd59a2cf1bb0",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Get Bluetooth devices",
+        "tooltip": "Gets number of Bluetooth devices near you",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "str",
+        "topic": "IoTlab/get_bluetooth",
+        "topicType": "msg",
+        "x": 840,
+        "y": 420,
+        "wires": [
+            [
+                "25ec406fdba5dfb2"
+            ]
+        ]
+    },
+    {
+        "id": "25ec406fdba5dfb2",
+        "type": "mqtt out",
+        "z": "52f53edf5237f2ef",
+        "name": "",
+        "topic": "IoTlab/get_bluetooth",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "3c33d56931cbc3e0",
+        "x": 1280,
+        "y": 420,
         "wires": []
     },
     {
@@ -595,35 +854,25 @@
     {
         "id": "06557fe02e4c8820",
         "type": "ui_group",
-        "name": "Light Buttons",
+        "name": "ButtonGroup",
         "tab": "db29f39ab6f92a6e",
         "order": 6,
         "disp": false,
-        "width": 30,
+        "width": "30",
         "collapse": false
     },
     {
         "id": "5d79457539c51f7d",
         "type": "ui_group",
-        "name": "Gauges",
-        "tab": "db29f39ab6f92a6e",
-        "order": 2,
-        "disp": false,
-        "width": 30,
-        "collapse": false
-    },
-    {
-        "id": "751430cd5e819a2c",
-        "type": "ui_group",
-        "name": "Thresholds",
+        "name": "Dashboard",
         "tab": "db29f39ab6f92a6e",
         "order": 3,
         "disp": false,
-        "width": 30,
+        "width": "30",
         "collapse": false
     },
     {
-        "id": "aceddb58673c05c4",
+        "id": "82c633584d5f3bdf",
         "type": "ui_group",
         "name": "Title",
         "tab": "db29f39ab6f92a6e",
@@ -633,11 +882,30 @@
         "collapse": false
     },
     {
+        "id": "4fe1f2adfa81ad28",
+        "type": "ui_group",
+        "name": "Thresholds",
+        "tab": "db29f39ab6f92a6e",
+        "order": 4,
+        "disp": false,
+        "width": 30,
+        "collapse": false
+    },
+    {
+        "id": "aa4cbd59a2cf1bb0",
+        "type": "ui_group",
+        "name": "Bluetooth",
+        "tab": "db29f39ab6f92a6e",
+        "order": 6,
+        "disp": false,
+        "width": "30",
+        "collapse": false
+    },
+    {
         "id": "db29f39ab6f92a6e",
         "type": "ui_tab",
         "name": "Smart Home Dashboard",
         "icon": "dashboard",
-        "order": 2,
         "disabled": false,
         "hidden": false
     }

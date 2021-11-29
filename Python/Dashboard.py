@@ -2,25 +2,30 @@ import email
 import imaplib
 import smtplib
 import time
-
-#import RPi.GPIO as GPIO
-
+import bluetooth
+import bluetooth._bluetooth as bt
+import struct
+import array
+import fcntl
+import os
+import json
+import re
+import RPi.GPIO as GPIO
 import paho.mqtt.client as paho
 import paho.mqtt.publish as publish
 from paho.mqtt import client as mqtt_client
-
 from datetime import datetime
 
 # Set up the global variables
 global client
 global no_response
 
-# GPIO.setwarnings(False)
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(21, GPIO.OUT)
-# GPIO.setup(23, GPIO.OUT)
-# GPIO.setup(24, GPIO.OUT)
-# GPIO.setup(25, GPIO.OUT)
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(21, GPIO.OUT)
+GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+GPIO.setup(25, GPIO.OUT)
 
 # Set up the MQTT connection
 client = paho.Client("client-001")
@@ -34,6 +39,9 @@ smtp_server = "smtp.gmail.com"
 sender_email = "waterisnoticecream@gmail.com"
 receiver_email = "waterisnoticecream@gmail.com"
 password = "Banana123!"
+
+#Threshold for the RSSI for Bluetooth
+desired_rssi = 0
 
 
 # Connect to the MQTT client
@@ -57,6 +65,7 @@ def subscribe(client: mqtt_client):
 
     # Is called whenever a message is received from the subscriptions
     def on_message(client, userdata, msg):
+        global desired_rssi
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
 
@@ -76,69 +85,92 @@ def subscribe(client: mqtt_client):
             print("Received a message from message_akash.")
             message = "At " + current_time + " time, Akash was here."
             send_email(message)
+        elif msg.topic == 'IoTlab/get_bluetooth':
+            print("The dashboard is requesting the Bluetooth information.")
+            bluetooth_information()
+            print("Information has been sent.")
+        elif msg.topic == 'IoTlab/desired_rssi':
+            print(f"Received a new desired RSSI: `{msg.payload.decode()}`")
+            desired_rssi = msg.payload.decode()
+            print("The new desired RSSI is: " + desired_rssi)
 
     client.subscribe("IoTlab/send_email")
     client.subscribe("IoTlab/buzzer")
     client.subscribe("IoTlab/message_carmelo")
     client.subscribe("IoTlab/message_akash")
+    client.subscribe("IoTlab/get_bluetooth")
+    client.subscribe("IoTlab/desired_rssi")
     client.on_message = on_message
+
+
+# Gets the Bluetooth information
+def bluetooth_information():
+    global desired_rssi
+    devices = os.system('sudo node bluetooth-fetcher.js > output.txt')
+    deviceList = []
+    rssiList = []
+    informationDict = {}
+    with open('output.txt',encoding='utf-8-sig', errors='ignore') as devices:
+         sp = devices.read().splitlines()
+        
+    for line in sp:
+        rssi = 0;
+        transmitterId = "";
+        if "transmitterId:" in line:
+            transmitterId = line.split("'")[1::2]
+            deviceList.append(transmitterId)
+        if "rssi:" in line:
+            rssi = int(re.search(r'\d+', line).group(0))
+            rssiList.append(rssi)
+    for i in range(len(deviceList)):
+        informationDict[deviceList[i][0]] = rssiList[i]
+    
+    number_devices = 0
+    print("There devices are available: " + str(informationDict))
+    
+    for x in informationDict:
+        print("This is the RSSI: " + str(x) + " with RSSI: " + str(informationDict.get(x)) + " with Desired: " + str(desired_rssi))
+        if str(informationDict.get(x)) > str(desired_rssi):
+            number_devices = number_devices + 1
+    
+    print("There are: " + str(number_devices) + " devices.")
+    if number_devices is not None:
+        publish.single("IoTlab/bluetooth_information", int(number_devices))
+    else:
+        publish.single("IoTlab/bluetooth_information", 0)
 
 
 # Turns the motor on
 def turn_motor_on():
     print("Turning motor on...")
     publish.single("IoTlab/received_email", 'a')
-    
-    # pulse1 = GPIO.PWM(23, 30)
-    # GPIO.output(24, GPIO.LOW)
-    # pulse2 = GPIO.PWM(25, 30)
-    # pulse1.start(0)
-    # pulse2.start(0)
-    #
-    # pulse1.ChangeDutyCycle(30)
-    # pulse2.ChangeDutyCycle(30)
-    #
-    # print("Starting the motor")
-    # GPIO.output(25, GPIO.LOW)
-    # GPIO.cleanup()
-    
+    print("Starting the motor")
+    GPIO.output(23, GPIO.HIGH)
+    GPIO.output(24, GPIO.LOW)
+    GPIO.output(25, GPIO.HIGH)
     print("Turned motor on!")
 
 
 # Turns the motor off
 def turn_motor_off():
     print("Turning motor off...")
-    publish.single("IoTlab/received_email", 'a')
-    
-    # pulse1 = GPIO.PWM(23, 30)
-    # GPIO.output(24, GPIO.LOW)
-    # pulse2 = GPIO.PWM(25, 30)
-    # pulse1.start(0)
-    # pulse2.start(0)
-    #
-    # GPIO.output(23, GPIO.HIGH)
-    # GPIO.output(24, GPIO.LOW)
-    # GPIO.output(25, GPIO.HIGH)
-    #
-    # time.sleep(3)
-    #
-    # print("Done closing the motor")
-    # GPIO.output(25, GPIO.LOW)
-    # GPIO.cleanup()
-
+    publish.single("IoTlab/received_email", 'b')   
+    print("Done closing the motor")
+    GPIO.output(25, GPIO.LOW)
+    GPIO.cleanup()
+    print("Turned motor on!")
     print("Turned motor off!")
 
 
 # Sets the buzzer on for 3 seconds before turning off again
 def turn_buzzer_on():
     print("Turning buzzer on!")
-
-    # GPIO.output(21, True)
-    # time.sleep(3)
-    # GPIO.output(21, False)
-    # GPIO.cleanup()
-
+    GPIO.output(21, True)
+    time.sleep(3)
+    GPIO.output(21, False)
+    GPIO.cleanup()
     print("Turned buzzer off!")
+
 
 # Send an email to the user containing the desired text
 def send_email(user_text):
@@ -206,7 +238,7 @@ def email_watcher():
                 print("Invalid entry!\n")
         time.sleep(3)
 
-
+#bluetooth_information()
 # The run method
 def run():
     client = connect_mqtt()
